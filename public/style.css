@@ -1,0 +1,57 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 80px;
+    border-bottom: 2px solid #c4c4c4;
+    
+}
+
+nav ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+nav ul li {
+    margin-left: 10px;
+
+}
+
+.blogs{
+    padding: 40px;
+    width: 70%;
+}
+
+.blogs h1{
+    margin-bottom: 10px;
+}
+
+.blogs ul li{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #000;
+    padding: 10px;
+}
+
+.blogs ul li a{
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    margin: auto;
+    margin-top: 5%;
+}
+form input{
+    padding: 10px;
+    margin-bottom: 10px;
+}
