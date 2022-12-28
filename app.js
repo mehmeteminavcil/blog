@@ -1,12 +1,23 @@
 const express = require('express')
 const morgan = require('morgan')
+const mongoose = require('mongoose')
 
 const app = express()
+
+mongoose.set('strictQuery',false);
+const dbURL = "mongodb+srv://memo:asd1234@nodeblog.gjxsidc.mongodb.net/?retryWrites=true&w=majority"
+
+
+
+mongoose.connect(dbURL, { useNewUrlParser: true,useUnifiedTopology: true})
+    .then((result)=> app.listen(3000))
+    .catch((err)=> console.log(err))
+
 
 
 app.set('view engine','ejs')
 
-app.listen(3000)
+
 
 app.use(express.static('public'))
 app.use(morgan('tiny'))
