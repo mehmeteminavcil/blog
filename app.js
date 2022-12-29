@@ -1,6 +1,8 @@
 const express = require('express')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
+const adminRoutes = require('./routes/adminRoutes')
+const blogRoutes = require('./routes/blogRoutes')
 
 const app = express()
 
@@ -20,27 +22,39 @@ app.set('view engine','ejs')
 
 
 app.use(express.static('public'))
-app.use(morgan('tiny'))
+
+app.use(express.urlencoded({ extended:true }))
+
+app.use(morgan('dev'))
+
+
 
 app.get('/',(req,res)=>{
-    res.render('index',{tittle:"Home"})
+    res.redirect('/blog')
 })
+
+
+
+
+app.use('/blog',blogRoutes)
+app.use('/admin',adminRoutes)
+
 
 app.get('/about',(req,res)=>{
-    res.render('about',{tittle:"About"})
+    res.render('about',{title:"About"})
 })
 
 
-app.get('/login',(req,res)=>{
-    res.render('login',{tittle:"Login"})
-})
 
 app.get('/about-us',(req,res)=>{
     res.redirect('./about')
 })
 
+app.get('/login',(req,res)=>{
+    res.render('login',{title:"Login"})
+})
 
 
 app.use((req,res)=>{
-    res.status(404).render('404',{tittle:"404 Error"})
+    res.status(404).render('404',{title:"404 Error"})
 })
