@@ -1,8 +1,11 @@
 const express = require('express')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
 const adminRoutes = require('./routes/adminRoutes')
 const blogRoutes = require('./routes/blogRoutes')
+const authRoutes = require('./routes/authRoutes')
+const { requireAuth} = require('./middlewares/authMiddleware')
 
 const app = express()
 
@@ -11,7 +14,7 @@ const dbURL = "mongodb+srv://memo:asd1234@nodeblog.gjxsidc.mongodb.net/?retryWri
 
 
 
-mongoose.connect(dbURL, { useNewUrlParser: true,useUnifiedTopology: true})
+mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true, })
     .then((result)=> app.listen(3000))
     .catch((err)=> console.log(err))
 
@@ -27,6 +30,8 @@ app.use(express.urlencoded({ extended:true }))
 
 app.use(morgan('dev'))
 
+app.use(cookieParser())
+
 
 
 app.get('/',(req,res)=>{
@@ -36,8 +41,9 @@ app.get('/',(req,res)=>{
 
 
 
+app.use('/',authRoutes)
 app.use('/blog',blogRoutes)
-app.use('/admin',adminRoutes)
+app.use('/admin',requireAuth,adminRoutes)
 
 
 app.get('/about',(req,res)=>{
@@ -50,9 +56,6 @@ app.get('/about-us',(req,res)=>{
     res.redirect('./about')
 })
 
-app.get('/login',(req,res)=>{
-    res.render('login',{title:"Login"})
-})
 
 
 app.use((req,res)=>{
